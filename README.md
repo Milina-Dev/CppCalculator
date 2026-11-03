@@ -1,7 +1,11 @@
 # CppCalculator
+
+![C](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white)
+![Visual Studio](https://img.shields.io/badge/Visual%20Studio-5C2D91.svg?style=for-the-badge&logo=visual-studio&logoColor=white)
+
 Консольный калькулятор на C++
 
-##  Описание проекта
+## Описание проекта
 
 Консольная программа для выполнения арифметических операций над двумя целыми числами.
 
