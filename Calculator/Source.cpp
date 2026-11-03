@@ -5,6 +5,140 @@
 
 using namespace std;
 
+/**
+ * Выполняет сложение двух чисел с проверкой переполнения
+ */
+void addition(int a, int b)
+{
+    if ((b > 0 && a > INT_MAX - b) || (b < 0 && a < INT_MIN - b))
+    {
+        cout << "Переполнение!\n";
+    }
+
+    else
+    {
+        cout << "Ответ: " << a + b << "\n";
+    }
+}
+
+/**
+ * Выполняет вычитание двух чисел с проверкой переполнения
+ */
+void subtraction(int a, int b)
+{
+    if ((b < 0 && a > INT_MAX + b) || (b > 0 && a < INT_MIN + b))
+    {
+        cout << "Переполнение!\n";
+    }
+
+    else
+    {
+        cout << "Ответ: " << a - b << "\n";
+    }
+}
+
+/**
+ * Выполняет умножение двух чисел с проверкой переполнения
+ */
+void multiplication(int a, int b)
+{
+    bool overflow = false;
+
+    if (a > 0)
+    {
+        if (b > 0 && a > INT_MAX / b)
+        {
+            overflow = true;
+        }
+
+        else if (b < 0 && b < INT_MIN / a)
+        {
+            overflow = true;
+        }
+    }
+
+    else if (a < 0)
+    {
+        if (b > 0 && a < INT_MIN / b)
+        {
+            overflow = true;
+        }
+
+        else if (b < 0 && a < INT_MAX / b)
+        {
+            overflow = true;
+        }
+    }
+
+    if (overflow)
+    {
+        cout << "Переполнение!\n";
+    }
+
+    else
+    {
+        cout << "Ответ: " << a * b << "\n";
+    }
+}
+
+/**
+ * Выполняет деление двух чисел с проверкой ошибок
+ */
+void division(int a, int b)
+{
+    if (b == 0)
+    {
+        cout << "На ноль делить нельзя!\n";
+    }
+
+    else if (a == INT_MIN && b == -1)
+    {
+        cout << "Переполнение!\n";
+    }
+
+    else
+    {
+        cout << "Ответ: " << (float)a / b << "\n";
+    }
+}
+
+/**
+ * Увеличивает число на единицу с проверкой переполнения.
+ */
+int increment(int a)
+{
+    if (a == INT_MAX)
+    {
+        cout << "Переполнение!\n";
+    }
+    else
+    {
+        a++;
+    }
+
+    return a;
+}
+/**
+ * Уменьшает число на единицу с проверкой переполнения.
+ */
+int decrement(int a)
+{
+    if (a == INT_MIN)
+    {
+        cout << "Переполнение!\n";
+    }
+    else
+    {
+        a--;
+    }
+
+    return a;
+}
+
+/**
+ * Главная функция программы
+ * Организует ввод данных, выполнение операций и вывод результатов
+ */
 int main()
 {
     SetConsoleCP(1251); // кодировка ввода
@@ -20,6 +154,7 @@ int main()
         cout << "Введите операцию (+, -, *, /, ++, --) или exit для выхода: ";
         cin >> operation;
 
+        // Выход из программы
         if (operation == "exit")
         {
             break;
@@ -41,86 +176,30 @@ int main()
             return 0;
         }
 
-        if (operation == "+")
+        if (operation == "+" || operation == "-" || operation == "*" || operation == "/")
         {
-            if ((b > 0 && a > INT_MAX - b) ||
-                (b < 0 && a < INT_MIN - b))
+            switch (operation[0])
             {
-                cout << "Переполнение!\n";
-            }
-            else
-            {
-                cout << "Ответ: " << a + b << "\n";
-            }
-        }
-        else if (operation == "-")
-        {
-            if ((b < 0 && a > INT_MAX + b) ||
-                (b > 0 && a < INT_MIN + b))
-            {
-                cout << "Переполнение!\n";
-            }
-            else
-            {
-                cout << "Ответ: " << a - b << "\n";
-            }
-        }
-        else if (operation == "*")
-        {
-            bool overflow = false;
+            case '+':
+                addition(a, b);
+                break;
 
-            if (a > 0)
-            {
-                if (b > 0 && a > INT_MAX / b)
-                {
-                    overflow = true;
-                }
+            case '-':
+                subtraction(a, b);
+                break;
 
-                else if (b < 0 && b < INT_MIN / a)
-                {
-                    overflow = true;
-                }
-            }
-            else if (a < 0)
-            {
-                if (b > 0 && a < INT_MIN / b)
-                {
-                    overflow = true;
-                }
+            case '*':
+                multiplication(a, b);
+                break;
 
-                else if (b < 0 && a < INT_MAX / b)
-                {
-                    overflow = true;
-                }
-            }
-
-            if (overflow)
-            {
-                cout << "Переполнение!\n";
-            }
-
-            else
-            {
-                cout << "Ответ: " << a * b << "\n";
-            }
-        }
-        else if (operation == "/")
-        {
-            if (b == 0)
-            {
-                cout << "На ноль делить нельзя!\n";
-            }
-            else if (a == INT_MIN && b == -1)
-            {
-                cout << "Переполнение!\n";
-            }
-            else
-            {
-                cout << "Ответ: " <<(float)a / b << "\n";
+            case '/':
+                division(a, b);
+                break;
             }
         }
         else if (operation == "++" || operation == "--")
         {
+            // Запрашиваем, какую переменную нужно изменить.
             cout << "Какую переменную изменить (a или b)? ";
             cin >> target;
 
@@ -128,69 +207,41 @@ int main()
             {
                 if (operation == "++")
                 {
-                    if (a == INT_MAX)
-                    {
-                        cout << "Переполнение!\n";
-                    }
-
-                    else
-                    {
-                        a++;
-                        cout << "Новое значение a: " << a << "\n";
-                    }
+                    a = increment(a);
+                    cout << "Новое значение a: " << a << "\n";
                 }
                 else
                 {
-                    if (a == INT_MIN)
-                    {
-                        cout << "Переполнение!\n";
-                    }
-
-                    else
-                    {
-                        a--;
-                        cout << "Новое значение a: " << a << "\n";
-                    }
+                    a = decrement(a);
+                    cout << "Новое значение a: " << a << "\n";
                 }
             }
+
             else if (target == 'b')
             {
                 if (operation == "++")
                 {
-                    if (b == INT_MAX)
-                    {
-                        cout << "Переполнение!\n";
-                    }
-
-                    else
-                    {
-                        b++;
-                        cout << "Новое значение b: " << b << "\n";
-                    }
+                    b = increment(b);
+                    cout << "Новое значение b: " << b << "\n";
                 }
+
                 else
                 {
-                    if (b == INT_MIN)
-                    {
-                        cout << "Переполнение!\n";
-                    }
-
-                    else
-                    {
-                        b--;
-                        cout << "Новое значение b: " << b << "\n";
-                    }
+                    b = decrement(b);
+                    cout << "Новое значение b: " << b << "\n";
                 }
             }
+
             else
             {
                 cout << "Неизвестная переменная!\n";
             }
-            }
+        }
+
         else
         {
             cout << "Неизвестная операция!\n";
-            }
+        }
     }
     return 0;
 }
